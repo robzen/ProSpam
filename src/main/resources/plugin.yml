@@ -1,0 +1,28 @@
+name: ProSpam
+main: de.rob1n.prospam.ProSpam
+author: prodaim
+version: 0.9.9
+
+commands:
+ prospam:
+  description: Manage all the ProSpam settings
+  usage: /prospam
+  permission: prospam.config
+  permission-message: You are not authorized to do this.
+
+permissions:
+ prospam.*:
+  description: All permissions
+  children:
+   prospam.config: true
+   prospam.nocheck: true
+   prospam.inform: false
+ prospam.config:
+  description: Manage all the settings
+  default: op
+ prospam.nocheck:
+  description: No spam check
+  default: op
+ prospam.inform:
+  description: Inform about spam violations
+  default: op

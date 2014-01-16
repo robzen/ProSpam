@@ -1,0 +1,51 @@
+enabled: true
+log-spam: true
+filter-enabled-caps: true
+trigger-enabled-caps: false
+filter-enabled-chars: true
+trigger-enabled-chars: false
+filter-enabled-flood: true
+trigger-enabled-flood: false
+filter-enabled-similar: true
+trigger-enabled-similar: false
+filter-enabled-urls: true
+trigger-enabled-urls: false
+filter-enabled-blacklist: true
+trigger-enabled-blacklist: false
+whitelist-enabled: true
+filter-caps-max: 51
+filter-flood-lock: 1
+filter-lines-similar: 120
+trigger-counter-reset: 300
+trigger-caps:
+ 1:
+  - "/tell {u} §cPlease stick to the Chatiquette. No Capslock"
+ 2:
+  - "/tell {u} §cPlease stick to the Chatiquette. No Capslock"
+  - "/eco take {u} 50"
+ 0:
+  - "/tell {u} §cNo Capslock! You are now muted for 5 minutes"
+  - "/mute {u} 5m"
+trigger-chars:
+ 1:
+  - "/tell {u} §cPlease stick to the Chatiquette. No Spam"
+ 2:
+  - "/tell {u} §cPlease stick to the Chatiquette. No Spam"
+  - "/eco take {u} 50"
+ 0:
+  - "/tell {u} §cNo Spam! You are now muted for 5 minutes"
+  - "/mute {u} 5m"
+trigger-flood:
+ 0:
+  - "/tell {u} §cPlease stick to the Chatiquette. No Spam"
+  - "/eco take {u} 10"
+trigger-similar:
+ 0:
+  - "/tell {u} §cPlease do not Spam!"
+  - "/eco take {u} 10"
+trigger-urls:
+ 0:
+  - "/tell {u} §cYou are not allowed to post this URL"
+trigger-blacklist:
+ 0:
+  - "/tell {u} §cYou are not allowed to post this word"

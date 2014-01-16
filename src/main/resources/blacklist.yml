@@ -1,0 +1,4 @@
+cover-chars: "*§$&%#"
+blacklist:
+ - "fuck"
+ - "shit"
