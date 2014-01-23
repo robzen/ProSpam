@@ -2,10 +2,12 @@ package de.rob1n.prospam.trigger;
 
 import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
+import de.rob1n.prospam.data.ConfigFile;
 import de.rob1n.prospam.data.specific.Settings;
 import de.rob1n.prospam.exception.IllegalCommandNameException;
 import de.rob1n.prospam.exception.PlayerNotOnlineException;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -93,7 +95,9 @@ public class Trigger
 			{
 				//replace {u} with playerName
 				cmd = cmd.replaceAll("\\{u\\}", player.getName());
-				cmd = cmd.substring(1); // cut the / char
+                // cut the / char
+				cmd = cmd.substring(1);
+
 			}
 			catch (Exception e)
 			{
@@ -102,9 +106,28 @@ public class Trigger
 
 			if (player.isOnline())
 			{
-				// execute command
-				if (!Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd))
-					throw new IllegalCommandNameException();
+                String rawMsgCmd = "raw ";
+                String colorReadyCmd;
+
+                if(cmd.startsWith(rawMsgCmd))
+                {
+                    //replace colors
+                    colorReadyCmd = ChatColor.translateAlternateColorCodes('&', cmd);
+
+                    //cut raw cmd and send raw message to player
+                    player.sendMessage(colorReadyCmd.substring(rawMsgCmd.length()));
+                }
+                else
+                {
+                    //replace colors
+                    colorReadyCmd = ConfigFile.replaceColorCodes(cmd);
+
+                    // execute command
+                    if (!Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), colorReadyCmd))
+                        throw new IllegalCommandNameException();
+                }
+
+                plugin.getLogger().info("Trigger executed: /"+cmd);
 			}
 			else
 				throw new PlayerNotOnlineException();

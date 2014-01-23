@@ -1,6 +1,7 @@
 package de.rob1n.prospam.data;
 
 import de.rob1n.prospam.ProSpam;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -54,6 +55,8 @@ public abstract class ConfigFile
 				YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(configStream);
 				fileConfiguration.setDefaults(defaultConfig);
 			}
+
+            loadSettings();
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -83,4 +86,14 @@ public abstract class ConfigFile
 		
 		return false;
 	}
+
+    public static String replaceColorCodes(String str)
+    {
+        for(ChatColor cc : ChatColor.values())
+        {
+            str = str.replace("&" + cc.name(), cc.toString());
+        }
+
+        return str;
+    }
 }

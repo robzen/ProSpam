@@ -3,6 +3,7 @@ package de.rob1n.prospam.filter;
 import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
 import de.rob1n.prospam.chatter.ChatterHandler;
+import de.rob1n.prospam.data.ConfigFile;
 import de.rob1n.prospam.data.specific.Settings;
 import de.rob1n.prospam.data.specific.Strings;
 import de.rob1n.prospam.filter.specific.*;
@@ -124,13 +125,13 @@ public class FilterHandler
 					{
 						chatter.increaseSpamCountFlood();
 						filters_triggered.add("Flood");
-						informSpam(player.getName(), filters_triggered);
+						informSpam(player.getName(), filters_triggered, chatMessage);
 						
 						if(settings.trigger_enabled_flood)
 							trigger.execute(chatter, chatter.getSpamCountFlood(), settings.trigger_flood);
 						
 						if(strings.filter_lines_locked != null && !strings.filter_lines_locked.isEmpty())
-							player.sendMessage(strings.filter_lines_locked);
+							player.sendMessage(ConfigFile.replaceColorCodes(strings.filter_lines_locked));
 						
 						return null;
 					}
@@ -144,13 +145,13 @@ public class FilterHandler
 					{
 						chatter.increaseSpamCountSimilar();
 						filters_triggered.add("Similar");
-						informSpam(player.getName(), filters_triggered);
+						informSpam(player.getName(), filters_triggered, chatMessage);
 						
 						if(settings.trigger_enabled_similar)
 							trigger.execute(chatter, chatter.getSpamCountSimilar(), settings.trigger_similar);
 						
 						if(strings.filter_lines_similar != null && !strings.filter_lines_similar.isEmpty())
-							player.sendMessage(strings.filter_lines_similar);
+							player.sendMessage(ConfigFile.replaceColorCodes(strings.filter_lines_similar));
 						
 						return null;
 					}
@@ -172,17 +173,17 @@ public class FilterHandler
 					
 					if (filteredMessage == null)
 					{
-						informSpam(player.getName(), filters_triggered);
+						informSpam(player.getName(), filters_triggered, chatMessage);
 						
 						if(strings.blacklist_lines_ignored != null && !strings.blacklist_lines_ignored.isEmpty())
-							player.sendMessage(strings.blacklist_lines_ignored);
+							player.sendMessage(ConfigFile.replaceColorCodes(strings.blacklist_lines_ignored));
 						
 						return null;
 					}
 				}
 				
 				if(filters_triggered.size() > 0)
-					informSpam(player.getName(), filters_triggered);
+					informSpam(player.getName(), filters_triggered, chatMessage);
 
 				return filteredMessage;
 			}
@@ -199,13 +200,13 @@ public class FilterHandler
 		return chatMessage;
 	}
 	
-	private void informSpam(final String playerName, final List<String> triggeredFilters)
+	private void informSpam(final String playerName, final List<String> triggeredFilters, final String origMessage)
 	{
 		final Player[] players = plugin.getServer().getOnlinePlayers();
 		final String joinedFilters = StringUtils.join(triggeredFilters, ", ");
 		
 		if(settings.log_spam)
-			plugin.getLogger().info("Player \""+playerName+"\" triggered a spam filter ("+joinedFilters+")");
+			plugin.getLogger().info("Player \""+playerName+"\" triggered a spam filter ("+joinedFilters+") ["+origMessage+"]");
 		
 		for(Player player: players)
 		{

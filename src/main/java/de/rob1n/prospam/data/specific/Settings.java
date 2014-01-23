@@ -111,7 +111,7 @@ public class Settings extends ConfigFile
 		filter_enabled_blacklist = getConfig().getBoolean(OPTIONS_FILTER_ENABLED_BLACKLIST, true);
 		
 		whitelist_enabled = getConfig().getBoolean(OPTIONS_WHITELIST_ENABLED, true);
-		filter_caps_max = getConfig().getInt(OPTIONS_FILTER_CAPS_MAX, 51);
+		filter_caps_max = getConfig().getInt(OPTIONS_FILTER_CAPS_MAX, 61);
 		filter_flood_lock = getConfig().getInt(OPTIONS_FILTER_FLOOD_LOCK, 3);
 		filter_lines_similar = getConfig().getInt(OPTIONS_FILTER_LINES_SIMILAR, 120);
 		

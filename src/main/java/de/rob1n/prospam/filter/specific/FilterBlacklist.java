@@ -6,12 +6,16 @@ import de.rob1n.prospam.data.specific.Blacklist;
 import de.rob1n.prospam.filter.Filter;
 
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FilterBlacklist extends Filter
 {
 	private final Blacklist blacklist;
 	private final List<String> blacklistStrings;
+
+    private final Random rand = new Random();
 	
 	public FilterBlacklist(ProSpam plugin)
 	{
@@ -39,13 +43,13 @@ public class FilterBlacklist extends Filter
 				if(hasParameterExact)
 					blacklistEntry = blacklistEntry.replace("{e}", "");
 				
-				if(message.contains(blacklistEntry))
+				if(message.toLowerCase().contains(blacklistEntry.toLowerCase()))
 				{
 					if(hasParameterExact)
 					{
 						final String msgBefore = cleanedMessage;
 						
-						cleanedMessage = cleanedMessage.replaceAll("(?i)\\b"+blacklistEntry+"\\b", getCensorChars(blacklistEntry));
+						cleanedMessage = cleanedMessage.replaceAll("(?i)\\b" + Pattern.quote(blacklistEntry) + "\\b", Matcher.quoteReplacement(getCensorChars(blacklistEntry)));
 						
 						if(hasParameterIgnoreLine && !cleanedMessage.equalsIgnoreCase(msgBefore))
 							return null;
@@ -55,7 +59,7 @@ public class FilterBlacklist extends Filter
 						if(hasParameterIgnoreLine)
 							return null;
 						else
-							cleanedMessage = cleanedMessage.replaceAll("(?i)"+blacklistEntry, getCensorChars(blacklistEntry));
+							cleanedMessage = cleanedMessage.replaceAll("(?i)" + Pattern.quote(blacklistEntry), Matcher.quoteReplacement(getCensorChars(blacklistEntry)));
 					}
 				}
 			}
@@ -70,19 +74,22 @@ public class FilterBlacklist extends Filter
 	private String getCensorChars(final String word)
 	{
 		String coverChars = blacklist.cover_chars;
-		final int coverCharsSize = coverChars.length() - 1;
-		final int wordLength = word.length();
-		
-		if(coverCharsSize < 0)
-			coverChars = "*";
-		
-		String censorChars = "";
-		for(int i=0; i<wordLength; ++i)
-		{
-			censorChars += i == 0 ? word.charAt(0) : coverChars.charAt((int)(Math.random()*coverCharsSize));
-		}
-		
-		return Matcher.quoteReplacement(censorChars);
-	}
+        StringBuilder sb = new StringBuilder(word.length());
 
+        if(coverChars.trim().isEmpty())
+            coverChars = "*";
+
+        for(int i=0; i<word.length(); i++)
+        {
+            if(i == 0 && word.length() > 1)
+                sb.append(word.charAt(0));
+            else
+            {
+                char randomChar = coverChars.charAt(rand.nextInt((coverChars.length())));
+                sb.append(randomChar);
+            }
+        }
+
+        return sb.toString();
+	}
 }

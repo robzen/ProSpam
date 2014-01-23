@@ -32,6 +32,10 @@ public class FilterChars extends Filter
 			// wort nicht checken falls in whitelist
 			if (isWhitelisted(wordArr[i]))
 				continue;
+
+            //wort nicht filtern falls zahl <= 10 chars 1000000000
+            if(StringUtils.isNumeric(wordArr[i]) && wordArr[i].length() <= 10)
+                continue;
 			
 			//filter multiple chars
 			wordArr[i] = wordArr[i].replaceAll("(?i)(.)\\1\\1+", "$1$1$1");

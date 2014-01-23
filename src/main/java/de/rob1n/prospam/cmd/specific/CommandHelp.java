@@ -36,7 +36,7 @@ public class CommandHelp extends Command
 	{
 		final CommandList cmdList = plugin.getCommandHandler().getCommandList();
 		
-		sender.sendMessage(plugin.prefixed("[Version: "+ProSpam.VERSION+"] "+"List of Commands"));
+		sender.sendMessage(plugin.prefixed("[Version: "+ProSpam.VERSION+" by prodaim] "+"List of Commands"));
 		for(Command cmd: cmdList)
 		{
 			sender.sendMessage(ChatColor.GRAY+"/prospam "+ChatColor.LIGHT_PURPLE+cmd.getUsage());

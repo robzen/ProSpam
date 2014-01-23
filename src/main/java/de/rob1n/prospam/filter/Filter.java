@@ -3,11 +3,10 @@ package de.rob1n.prospam.filter;
 import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
 import de.rob1n.prospam.data.DataHandler;
+import de.rob1n.prospam.data.StringList;
 import de.rob1n.prospam.data.specific.Settings;
 import de.rob1n.prospam.data.specific.Strings;
 import org.bukkit.entity.Player;
-
-import java.util.List;
 
 
 public abstract class Filter
@@ -16,7 +15,7 @@ public abstract class Filter
 	protected final DataHandler dataHandler;
 	protected final Settings settings;
 	protected final Strings strings;
-	protected final List<String> whitelist;
+	protected final StringList whitelist;
 	
 	
 	public Filter(ProSpam plugin)
@@ -26,7 +25,7 @@ public abstract class Filter
 		dataHandler = plugin.getDataHandler();
 		settings = dataHandler.getSettings();
 		strings = dataHandler.getStrings();
-		whitelist = dataHandler.getWhitelist().whitelist;
+		whitelist = new StringList(dataHandler.getWhitelist().whitelist);
 	}
 	
 	public String execute(final Chatter chatter, final String message) throws IllegalArgumentException
@@ -58,6 +57,6 @@ public abstract class Filter
 	
 	protected boolean isWhitelisted(final String word)
 	{
-		return settings.whitelist_enabled && whitelist.contains(word);
+		return settings.whitelist_enabled && whitelist.containsIgnoreCase(word);
 	}
 }
