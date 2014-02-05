@@ -9,12 +9,14 @@ public class Strings extends ConfigFile
 	public static final String STRINGS_FILTER_LINES_LOCKED = "filter-lines-locked";
 	public static final String STRINGS_FILTER_URLS_BLOCKED = "filter-urls-blocked";
 	public static final String STRINGS_BLACKKLIST_LINES_IGNORED = "blacklist-lines-ignored";
-	
+	public static final String STRINGS_TRIGGER_INFORMATION = "trigger-information";
+
 	public String filter_lines_similar;
 	public String filter_lines_locked;
 	public String filter_urls_blocked;
 	public String blacklist_lines_ignored;
-	
+	public String trigger_information;
+
 	public Strings(ProSpam plugin, String fileName)
 	{
 		super(plugin, fileName);
@@ -27,6 +29,7 @@ public class Strings extends ConfigFile
 		filter_lines_locked = getConfig().getString(STRINGS_FILTER_LINES_LOCKED, "Please wait a moment till you send your next message");
 		filter_urls_blocked = getConfig().getString(STRINGS_FILTER_URLS_BLOCKED, "<url blocked>");
 		blacklist_lines_ignored = getConfig().getString(STRINGS_BLACKKLIST_LINES_IGNORED, "Your message has been ignored due to a bad word");
+		trigger_information = getConfig().getString(STRINGS_TRIGGER_INFORMATION, "&7{0} triggered a filter ({1})");
 	}
 
 	@Override
@@ -36,5 +39,6 @@ public class Strings extends ConfigFile
 		getConfig().set(STRINGS_FILTER_LINES_LOCKED, filter_lines_locked);
 		getConfig().set(STRINGS_FILTER_URLS_BLOCKED, filter_urls_blocked);
 		getConfig().set(STRINGS_BLACKKLIST_LINES_IGNORED, blacklist_lines_ignored);
+		getConfig().set(STRINGS_TRIGGER_INFORMATION, trigger_information);
 	}
 }

@@ -3,14 +3,15 @@ package de.rob1n.prospam.filter;
 import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
 import de.rob1n.prospam.chatter.ChatterHandler;
-import de.rob1n.prospam.data.ConfigFile;
 import de.rob1n.prospam.data.specific.Settings;
 import de.rob1n.prospam.data.specific.Strings;
 import de.rob1n.prospam.filter.specific.*;
 import de.rob1n.prospam.trigger.Trigger;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +132,7 @@ public class FilterHandler
 							trigger.execute(chatter, chatter.getSpamCountFlood(), settings.trigger_flood);
 						
 						if(strings.filter_lines_locked != null && !strings.filter_lines_locked.isEmpty())
-							player.sendMessage(ConfigFile.replaceColorCodes(strings.filter_lines_locked));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', strings.filter_lines_locked));
 						
 						return null;
 					}
@@ -151,7 +152,7 @@ public class FilterHandler
 							trigger.execute(chatter, chatter.getSpamCountSimilar(), settings.trigger_similar);
 						
 						if(strings.filter_lines_similar != null && !strings.filter_lines_similar.isEmpty())
-							player.sendMessage(ConfigFile.replaceColorCodes(strings.filter_lines_similar));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', strings.filter_lines_similar));
 						
 						return null;
 					}
@@ -176,7 +177,7 @@ public class FilterHandler
 						informSpam(player.getName(), filters_triggered, chatMessage);
 						
 						if(strings.blacklist_lines_ignored != null && !strings.blacklist_lines_ignored.isEmpty())
-							player.sendMessage(ConfigFile.replaceColorCodes(strings.blacklist_lines_ignored));
+							player.sendMessage(ChatColor.translateAlternateColorCodes('&', strings.blacklist_lines_ignored));
 						
 						return null;
 					}
@@ -206,12 +207,12 @@ public class FilterHandler
 		final String joinedFilters = StringUtils.join(triggeredFilters, ", ");
 		
 		if(settings.log_spam)
-			plugin.getLogger().info("Player \""+playerName+"\" triggered a spam filter ("+joinedFilters+") ["+origMessage+"]");
+			plugin.getLogger().info(MessageFormat.format("{0} triggered a spam filter: {1} [{2}]", playerName, joinedFilters, origMessage));
 		
 		for(Player player: players)
 		{
-			if(player.hasPermission("prospam.inform") && !player.getName().equals(playerName))
-				player.sendMessage(plugin.prefixed(playerName+" triggert a filter ("+joinedFilters+")"));
+			if(player.hasPermission("prospam.inform")/* && !player.getName().equals(playerName)*/)
+				player.sendMessage(plugin.prefixed(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(strings.trigger_information, playerName, joinedFilters))));
 		}
 	}
 }

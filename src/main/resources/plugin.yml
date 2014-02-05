@@ -1,7 +1,7 @@
 name: ProSpam
 main: de.rob1n.prospam.ProSpam
 author: prodaim
-version: 0.9.92
+version: 0.9.93
 
 commands:
  prospam:

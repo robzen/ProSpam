@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ProSpam extends JavaPlugin
 {
-	public static final String VERSION = "0.9.91";
+	public static final String VERSION = "0.9.93";
 	
 	private CommandHandler mCommandHandler = null;
 	private DataHandler mDataHandler = null;
@@ -55,7 +55,7 @@ public class ProSpam extends JavaPlugin
 	 */
 	public String prefixed(final String message)
 	{
-		return "["+ChatColor.ITALIC+ChatColor.YELLOW+"ProSpam"+ChatColor.RESET+"] "+message;
+		return "[" + ChatColor.ITALIC+ChatColor.YELLOW + "ProSpam" + ChatColor.RESET + "] "+ message;
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class ProSpam extends JavaPlugin
 	 */
 	public String error(final String message)
 	{
-		return (prefixed("["+ChatColor.DARK_RED+"Error"+ChatColor.RESET+"] " + message));
+		return (prefixed("[" + ChatColor.DARK_RED + "Error" + ChatColor.RESET + "] " + message));
 	}
 
 	public DataHandler getDataHandler()
