@@ -4,6 +4,7 @@ import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.cmd.CommandWithGui;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CommandTriggerUrls extends CommandTrigger implements CommandWithGui
@@ -43,6 +44,12 @@ public class CommandTriggerUrls extends CommandTrigger implements CommandWithGui
 	{
 		settings.trigger_urls.put(vNumber, cmds);
 	}
+
+    @Override
+    public HashMap<Integer, List<String>> getTriggers()
+    {
+        return settings.trigger_urls;
+    }
 
     @Override
     public void showGui(Player player)

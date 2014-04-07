@@ -71,13 +71,12 @@ public class CommandCounter extends Command implements CommandWithGui
     public void showGui(Player player)
     {
         Set<Item> items = new HashSet<Item>();
-        ItemStack itemStack = new ItemStack(Material.SKULL_ITEM, 1, (byte)3);
 
         int iter = 0;
         for(final Player p: Bukkit.getServer().getOnlinePlayers())
         {
             //noinspection deprecation
-            items.add(new Item(iter++, itemStack, p.getName(), "Click to print spam statistics", new Item.ClickAction()
+            items.add(new Item(iter++, new ItemStack(Material.SKULL_ITEM, 1, (byte)3), p.getName(), "Click to print spam statistics", new Item.ClickAction()
             {
                 @Override
                 public void onClick(Player player)
@@ -105,7 +104,7 @@ public class CommandCounter extends Command implements CommandWithGui
         }
 
         sender.sendMessage(ProSpam.prefixed("Spam violations of '"+name + "' since last restart"));
-        sender.sendMessage(ProSpam.prefixed(ChatColor.DARK_GRAY+""+chatter.getUUID()));
+        sender.sendMessage(ProSpam.prefixed(ChatColor.DARK_GRAY+"ID: "+chatter.getUUID()));
         sender.sendMessage("|  "+ChatColor.GRAY+"Caps: "+ChatColor.RESET+chatter.getSpamCountCaps());
         sender.sendMessage("|  "+ChatColor.GRAY+"Char spam: "+ChatColor.RESET+chatter.getSpamCountChars());
         sender.sendMessage("|  "+ChatColor.GRAY+"Flood: "+ChatColor.RESET+chatter.getSpamCountFlood());

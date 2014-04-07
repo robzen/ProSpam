@@ -4,6 +4,7 @@ import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.cmd.CommandWithGui;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CommandTriggerChars extends CommandTrigger implements CommandWithGui
@@ -43,6 +44,12 @@ public class CommandTriggerChars extends CommandTrigger implements CommandWithGu
 	{
 		settings.trigger_chars.put(vNumber, cmds);
 	}
+
+    @Override
+    public HashMap<Integer, List<String>> getTriggers()
+    {
+        return settings.trigger_chars;
+    }
 
     @Override
     public void showGui(Player player)

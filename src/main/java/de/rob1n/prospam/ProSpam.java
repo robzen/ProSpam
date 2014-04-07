@@ -6,11 +6,13 @@ import de.rob1n.prospam.data.DataHandler;
 import de.rob1n.prospam.filter.FilterHandler;
 import de.rob1n.prospam.gui.GuiManager;
 import de.rob1n.prospam.listener.ChatListener;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +33,19 @@ public class ProSpam extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
+        //check if the bukkit version is greater than 1.7.4
+        try
+        {
+            //check if this new method is supported
+            Bukkit.getPlayer(new UUID(2, 1));
+        }
+        catch (NoSuchMethodError e)
+        {
+            ProSpam.log(Level.SEVERE, "Server version not supported. Please download an earlier version of ProSpam.");
+            this.setEnabled(false);
+            return;
+        }
+
 		mDataHandler = new DataHandler(this);
 		mChatterHandler = new ChatterHandler(this);
 		mChatListener = new ChatListener(this);

@@ -22,6 +22,8 @@ public abstract class CommandTrigger extends Command
 
     public abstract void saveInSettings(final int vNumber, final List<String> cmds);
 
+    public abstract HashMap<Integer, List<String>> getTriggers();
+
     @Override
     public void execute(final CommandSender sender, final String[] parameter) throws IllegalArgumentException
     {
@@ -48,7 +50,7 @@ public abstract class CommandTrigger extends Command
         if (vNumber < 0) throw new IllegalArgumentException();
 
         parameter[0] = ""; //strip "trigger-caps"
-        cmds = getTriggerCmds(parameter);
+        cmds = getTriggerCmds(vNumber, parameter);
 
         saveInSettings(vNumber, cmds);
 
@@ -58,12 +60,17 @@ public abstract class CommandTrigger extends Command
         if (!settings.save()) sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
     }
 
-    private List<String> getTriggerCmds(final String[] params)
+    private List<String> getTriggerCmds(int vNumber, final String[] params)
     {
         final String paramString = StringUtils.join(params, " ");
         final String[] cmds = paramString.split(",");
 
-        List<String> cmdList = new ArrayList<String>();
+        List<String> cmdList = getTriggers().get(vNumber);
+
+        if(cmdList == null)
+        {
+            cmdList = new ArrayList<String>();
+        }
 
         if (paramString.trim().isEmpty()) return cmdList;
 
@@ -169,8 +176,8 @@ public abstract class CommandTrigger extends Command
                 player.closeInventory();
 
                 player.sendMessage(ProSpam.prefixed("Add a command, executed if a player violates the " + filter + " filter the " + violationKey + ". time"));
-                player.sendMessage(ProSpam.prefixed("Type " + ChatColor.AQUA + "/prospam " + getName() + " " + violationKey + " <command>"));
-                player.sendMessage(ProSpam.prefixed(ChatColor.GRAY + "Example: " + ChatColor.ITALIC + "/prospam " + getName() + " " + violationKey + " /raw Hey {u}, No Spam!"));
+                player.sendMessage(ProSpam.prefixed("Type " + ChatColor.AQUA + "/prospam " + getAliases()[0] + " " + violationKey + " <command>"));
+                player.sendMessage(ProSpam.prefixed(ChatColor.GRAY + "Example: " + ChatColor.ITALIC + "/prospam " + getAliases()[0] + " " + violationKey + " /raw Hey {u}, No Spam!"));
 
                 /*FancyMessage fancyMessage = new FancyMessage("CLICK ME ").suggest("/prospam "+getName()+ violationKey + "/").then("to add a new command");
                 player.sendRawMessage(fancyMessage.toJSONString());
