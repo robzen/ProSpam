@@ -53,10 +53,10 @@ public class CommandTriggerDisable extends Command
 		else
 			throw new IllegalArgumentException();
 		
-		sender.sendMessage(plugin.prefixed(StringUtils.capitalize(triggerName)+" triggers successfully disabled"));
+		sender.sendMessage(ProSpam.prefixed(StringUtils.capitalize(triggerName)+" triggers successfully disabled"));
 		
 		if(!settings.save())
-			sender.sendMessage(plugin.prefixed("Could not save state in the config file!"));
+			sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
 	}
 
 }

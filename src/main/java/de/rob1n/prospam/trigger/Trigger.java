@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 public class Trigger
 {
@@ -38,7 +39,7 @@ public class Trigger
 		}
 		catch (PlayerNotOnlineException e)
 		{
-			plugin.getLogger().warning("Could not execute trigger: " + e.getMessage());
+            ProSpam.log(Level.WARNING, "Could not execute trigger: " + e.getMessage());
 			return false;
 		}
 
@@ -66,7 +67,7 @@ public class Trigger
 			}
 			catch (Exception e)
 			{
-				plugin.getLogger().warning("Could not execute trigger: " + e.getMessage());
+                ProSpam.log(Level.WARNING, "Could not execute trigger: " + e.getMessage());
 				return false;
 			}
 		}
@@ -79,7 +80,7 @@ public class Trigger
 			}
 			catch (Exception e)
 			{
-				plugin.getLogger().warning("Could not execute trigger: " + e.getMessage());
+                ProSpam.log(Level.WARNING, "Could not execute trigger: " + e.getMessage());
 				return false;
 			}
 		}
@@ -94,7 +95,10 @@ public class Trigger
 			try
 			{
 				//replace {u} with playerName
-				cmd = cmd.replaceAll("\\{u\\}", player.getName());
+                //noinspection deprecation
+                cmd = cmd.replaceAll("\\{u\\}", player.getName());
+                //replace {i} with unique player id
+				cmd = cmd.replaceAll("\\{i\\}", player.getUniqueId().toString());
                 // cut the / char
 				cmd = cmd.substring(1);
 
@@ -127,7 +131,7 @@ public class Trigger
                         throw new IllegalCommandNameException();
                 }
 
-                plugin.getLogger().info("Trigger executed: /"+cmd);
+                ProSpam.log(Level.INFO, "Trigger executed: /"+cmd);
 			}
 			else
 				throw new PlayerNotOnlineException();

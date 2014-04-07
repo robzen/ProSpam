@@ -35,10 +35,14 @@ public class CommandDisable extends Command
 	{
 		settings.enabled = false;
 		
-		sender.sendMessage(plugin.prefixed("Plugin successfully disabled."));
-		
 		if(!settings.save())
-			sender.sendMessage(plugin.prefixed("Could not save state in the config file!"));
+        {
+            sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        }
+        else
+        {
+            sender.sendMessage(ProSpam.prefixed("Plugin successfully disabled."));
+        }
 	}
 
 }

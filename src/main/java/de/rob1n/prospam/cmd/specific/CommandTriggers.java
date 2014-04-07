@@ -49,7 +49,7 @@ public class CommandTriggers extends Command
 				&& !trigger.equalsIgnoreCase("similar") && !trigger.equalsIgnoreCase("urls") && !trigger.equalsIgnoreCase("blacklist"))
 			throw new IllegalArgumentException();
 
-		sender.sendMessage(plugin.prefixed("Displaying triggers"));
+		sender.sendMessage(ProSpam.prefixed("Displaying triggers"));
 
 		if (trigger.equalsIgnoreCase("caps") || trigger.equals("all"))
 		{

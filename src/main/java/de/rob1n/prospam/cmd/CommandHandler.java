@@ -4,19 +4,18 @@ import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.exception.IllegalCommandNameException;
 import org.bukkit.command.CommandSender;
 
+import java.util.logging.Level;
+
 public class CommandHandler
 {
-	private final ProSpam plugin;
 	private final CommandList commandList;
 	
 	public CommandHandler(ProSpam plugin)
 	{
-		this.plugin = plugin;
-		
 		commandList = new CommandList(plugin);
 	}
 	
-	public boolean execute(CommandSender sender, String label, String[] args)
+	public boolean execute(CommandSender sender, /*String label, */String[] args)
 	{
 		if(!sender.hasPermission("prospam.config"))
 			return true;
@@ -30,13 +29,13 @@ public class CommandHandler
 		}
 		catch (IllegalCommandNameException e)
 		{
-			sender.sendMessage(plugin.error("Illegal Command"));
+			sender.sendMessage(ProSpam.error("Illegal Command"));
 			return callHelpCommand(sender);
 		}
 		catch (Exception e)
 		{
 			if(cmd != null)
-				sender.sendMessage(plugin.error("Illegal Arguments. Usage: "+cmd.getUsage()));
+				sender.sendMessage(ProSpam.error("Illegal Arguments. Usage: "+cmd.getUsage()));
 			else
 				return callHelpCommand(sender);
 		}
@@ -52,7 +51,7 @@ public class CommandHandler
 		}
 		catch (Exception e)
 		{
-			plugin.getLogger().severe(e.getMessage());
+            ProSpam.log(Level.SEVERE, e.getMessage());
 			
 			return false;
 		}

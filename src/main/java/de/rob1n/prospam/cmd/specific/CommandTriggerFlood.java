@@ -1,10 +1,12 @@
 package de.rob1n.prospam.cmd.specific;
 
 import de.rob1n.prospam.ProSpam;
+import de.rob1n.prospam.cmd.CommandWithGui;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandTriggerFlood extends CommandTrigger
+public class CommandTriggerFlood extends CommandTrigger implements CommandWithGui
 {
 
 	public CommandTriggerFlood(ProSpam plugin)
@@ -41,4 +43,10 @@ public class CommandTriggerFlood extends CommandTrigger
 	{
 		settings.trigger_flood.put(vNumber, cmds);
 	}
+
+    @Override
+    public void showGui(Player player)
+    {
+        showGui(player, "Flood", settings.trigger_flood);
+    }
 }

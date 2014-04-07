@@ -35,10 +35,15 @@ public class CommandWhitelistEnable extends Command
 	{
 		settings.whitelist_enabled = true;
 		
-		sender.sendMessage(plugin.prefixed("Whitelist successfully enabled."));
-		
+
 		if(!settings.save())
-			sender.sendMessage(plugin.prefixed("Could not save state in the config file!"));
+        {
+            sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        }
+        else
+        {
+            sender.sendMessage(ProSpam.prefixed("Whitelist successfully enabled."));
+        }
 	}
 
 }

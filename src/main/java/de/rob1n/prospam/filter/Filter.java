@@ -44,11 +44,12 @@ public abstract class Filter
 	 */
 	protected abstract String executeFilter(final Chatter chatter, final String message);
 	
-	protected boolean isPlayer(final Player[] playersOnline, final String word)
+	protected boolean isPlayerName(final Player[] playersOnline, final String word)
 	{
 		for(Player p: playersOnline)
 		{
-			if(p.getName().equalsIgnoreCase(word))
+            //noinspection deprecation
+            if(p.getName().equalsIgnoreCase(word))
 				return true;
 		}
 		

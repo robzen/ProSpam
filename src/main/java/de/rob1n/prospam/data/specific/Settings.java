@@ -7,6 +7,7 @@ import org.bukkit.configuration.MemorySection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
 
 public class Settings extends ConfigFile
 {
@@ -90,7 +91,7 @@ public class Settings extends ConfigFile
 		}
 		catch(NumberFormatException e)
 		{
-			plugin.getLogger().severe(plugin.error("Could not parse "+triggerName));
+            ProSpam.log(Level.SEVERE, "Could not parse "+triggerName);
 		}
 
 		return map;

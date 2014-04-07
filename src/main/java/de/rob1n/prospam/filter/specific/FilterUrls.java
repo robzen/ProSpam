@@ -10,9 +10,9 @@ import org.apache.commons.validator.routines.UrlValidator;
 
 public class FilterUrls extends Filter
 {
-	private InetAddressValidator inetValidator = InetAddressValidator.getInstance();
-	private DomainValidator domainValidator = DomainValidator.getInstance();
-	private UrlValidator urlValidator = UrlValidator.getInstance();
+	private final InetAddressValidator inetValidator = InetAddressValidator.getInstance();
+	private final DomainValidator domainValidator = DomainValidator.getInstance();
+	private final UrlValidator urlValidator = UrlValidator.getInstance();
 	
 	public FilterUrls(ProSpam plugin)
 	{

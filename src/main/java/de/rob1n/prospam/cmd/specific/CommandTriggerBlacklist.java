@@ -1,10 +1,12 @@
 package de.rob1n.prospam.cmd.specific;
 
 import de.rob1n.prospam.ProSpam;
+import de.rob1n.prospam.cmd.CommandWithGui;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandTriggerBlacklist extends CommandTrigger
+public class CommandTriggerBlacklist extends CommandTrigger implements CommandWithGui
 {
 
 	public CommandTriggerBlacklist(ProSpam plugin)
@@ -41,4 +43,10 @@ public class CommandTriggerBlacklist extends CommandTrigger
 	{
 		settings.trigger_blacklist.put(vNumber, cmds);
 	}
+
+    @Override
+    public void showGui(Player player)
+    {
+        showGui(player, "Blacklist", settings.trigger_blacklist);
+    }
 }

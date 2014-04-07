@@ -30,7 +30,7 @@ public class ChatListener implements Listener
 			final Player player = event.getPlayer();
 			final String message = event.getMessage();
 			
-			final Chatter chatter = ChatterHandler.getChatter(player.getName());
+			final Chatter chatter = ChatterHandler.getChatter(player.getUniqueId());
 			
 			String filteredMessage = plugin.getFilterHandler().execute(player, message);
 			

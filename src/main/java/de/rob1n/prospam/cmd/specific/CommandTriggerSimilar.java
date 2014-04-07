@@ -1,10 +1,12 @@
 package de.rob1n.prospam.cmd.specific;
 
 import de.rob1n.prospam.ProSpam;
+import de.rob1n.prospam.cmd.CommandWithGui;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandTriggerSimilar extends CommandTrigger
+public class CommandTriggerSimilar extends CommandTrigger implements CommandWithGui
 {
 
 	public CommandTriggerSimilar(ProSpam plugin)
@@ -41,4 +43,10 @@ public class CommandTriggerSimilar extends CommandTrigger
 	{
 		settings.trigger_similar.put(vNumber, cmds);
 	}
+
+    @Override
+    public void showGui(Player player)
+    {
+        showGui(player, "Similar", settings.trigger_similar);
+    }
 }

@@ -1,19 +1,25 @@
 package de.rob1n.prospam.chatter;
 
 import de.rob1n.prospam.exception.ChatterHasNoMessagesException;
+import de.rob1n.prospam.exception.PlayerNotOnlineException;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Chatter
 {
-	private final String name;
-	private List<ChatMessage> submittedMessages = new ArrayList<ChatMessage>();
+	private final java.util.UUID uuid;
+
+	private final List<ChatMessage> submittedMessages = new ArrayList<ChatMessage>();
 	private long spamStarted = 0;
 	
 	private static final int MAX_MESSAGE_HISTORY = 40;
-	
+
+    //TODO: save this data
 	private int spamCountCaps = 0;
 	private int spamCountChars = 0;
 	private int spamCountFlood = 0;
@@ -21,16 +27,26 @@ public class Chatter
 	private int spamCountUrls = 0;
 	private int spamCountBlacklist = 0;
 	
-	public Chatter(String name)
+	public Chatter(UUID uuid)
 	{
-		this.name = name;
+		this.uuid = uuid;
 	}
 	
-	public Chatter(final String name, ChatMessage message)
+	public Chatter(final UUID uuid, ChatMessage message)
 	{
-		this.name = name;
+		this(uuid);
 		this.submittedMessages.add(message);
 	}
+
+    public Player getPlayer() throws PlayerNotOnlineException
+    {
+        Player player = Bukkit.getServer().getPlayer(uuid);
+
+        if(player != null)
+            return player;
+
+        throw new PlayerNotOnlineException();
+    }
 	
 	public void increaseSpamCountCaps()
 	{
@@ -149,8 +165,8 @@ public class Chatter
 		return submittedMessages;
 	}
 	
-	public String getName()
+	public UUID getUUID()
 	{
-		return name;
+		return uuid;
 	}
 }

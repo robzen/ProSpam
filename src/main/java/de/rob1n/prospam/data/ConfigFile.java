@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.logging.Level;
 
 public abstract class ConfigFile
 {
@@ -60,7 +61,7 @@ public abstract class ConfigFile
 		}
 		catch(IllegalArgumentException e)
 		{
-			plugin.getLogger().severe("Could not load Config File");
+            ProSpam.log(Level.SEVERE, "Could not load Config file");
 		}
 	}
 	
@@ -80,7 +81,7 @@ public abstract class ConfigFile
 			}
 			catch (IOException e)
 			{
-				plugin.getLogger().severe("Could not save Config File");
+                ProSpam.log(Level.SEVERE, "Could not save Config file");
 			}
 		}
 		

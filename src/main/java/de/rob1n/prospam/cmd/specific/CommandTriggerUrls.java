@@ -1,10 +1,12 @@
 package de.rob1n.prospam.cmd.specific;
 
 import de.rob1n.prospam.ProSpam;
+import de.rob1n.prospam.cmd.CommandWithGui;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandTriggerUrls extends CommandTrigger
+public class CommandTriggerUrls extends CommandTrigger implements CommandWithGui
 {
 
 	public CommandTriggerUrls(ProSpam plugin)
@@ -41,4 +43,10 @@ public class CommandTriggerUrls extends CommandTrigger
 	{
 		settings.trigger_urls.put(vNumber, cmds);
 	}
+
+    @Override
+    public void showGui(Player player)
+    {
+        showGui(player, "URLs", settings.trigger_urls);
+    }
 }

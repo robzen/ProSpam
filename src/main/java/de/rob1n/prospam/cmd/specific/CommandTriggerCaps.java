@@ -1,10 +1,12 @@
 package de.rob1n.prospam.cmd.specific;
 
 import de.rob1n.prospam.ProSpam;
+import de.rob1n.prospam.cmd.CommandWithGui;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandTriggerCaps extends CommandTrigger
+public class CommandTriggerCaps extends CommandTrigger implements CommandWithGui
 {
 
 	public CommandTriggerCaps(ProSpam plugin)
@@ -41,4 +43,10 @@ public class CommandTriggerCaps extends CommandTrigger
 	{
 		settings.trigger_caps.put(vNumber, cmds);
 	}
+
+    @Override
+    public void showGui(Player player)
+    {
+        showGui(player, "Caps", settings.trigger_caps);
+    }
 }

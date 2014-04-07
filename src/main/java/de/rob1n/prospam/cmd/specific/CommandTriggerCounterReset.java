@@ -4,10 +4,11 @@ import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
 import de.rob1n.prospam.chatter.ChatterHandler;
 import de.rob1n.prospam.cmd.Command;
-import de.rob1n.prospam.exception.ChatterNotFoundException;
+import de.rob1n.prospam.exception.PlayerNotOnlineException;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
+import java.util.Set;
 
 public class CommandTriggerCounterReset extends Command
 {
@@ -47,7 +48,7 @@ public class CommandTriggerCounterReset extends Command
 				chatter.resetSpamViolations();
 			}
 
-			sender.sendMessage(plugin.prefixed("Spam violation counter successfully resetted"));
+			sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted"));
 		}
 		else
 		{
@@ -63,29 +64,38 @@ public class CommandTriggerCounterReset extends Command
 
 					settings.trigger_counter_reset = resetTime;
 
-					if (resetTime != 0)
-						sender.sendMessage(plugin.prefixed("Reset timer successfully set to " + resetTime + " minutes"));
-					else
-						sender.sendMessage(plugin.prefixed("Timed trigger counter reset disabled"));
-
 					if (!settings.save())
-						sender.sendMessage(plugin.prefixed("Could not save state in the config file!"));
+                    {
+                        sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+                    }
+                    else
+                    {
+                        if (resetTime != 0)
+                            sender.sendMessage(ProSpam.prefixed("Reset timer successfully set to " + resetTime + " minutes"));
+                        else
+                            sender.sendMessage(ProSpam.prefixed("Timed trigger counter reset disabled"));
+                    }
 				}
 				catch (NumberFormatException e)
 				{
-					try
-					{
-						final Chatter chatter = ChatterHandler.getChatter(parameter[1], false);
-						chatter.resetSpamViolations();
+                    final Set<Chatter> chatters = ChatterHandler.getChatter(parameter[1]);
 
-						sender.sendMessage(plugin.prefixed("Spam violation counter successfully resetted for Player " + chatter.getName()));
-					}
-					catch (ChatterNotFoundException e1)
-					{
-						sender.sendMessage(plugin.error("Player not found"));
-					}
+                    for (Chatter chatter : chatters)
+                    {
+                        chatter.resetSpamViolations();
+
+                        try
+                        {
+                            //noinspection deprecation
+                            String name = chatter.getPlayer().getName();
+                            sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted for " + name));
+                        }
+                        catch (PlayerNotOnlineException ignored)
+                        {
+                            sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted for Player UUID: " + chatter.getUUID()));
+                        }
+                    }
 				}
-
 			}
 			else
 				throw new IllegalArgumentException();

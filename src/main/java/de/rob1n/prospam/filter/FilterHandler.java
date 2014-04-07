@@ -14,6 +14,8 @@ import org.bukkit.entity.Player;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
 
 public class FilterHandler
 {
@@ -48,11 +50,12 @@ public class FilterHandler
 		trigger = new Trigger(plugin);
 	}
 
-	public String execute(final Player player, final String chatMessage)
+	@SuppressWarnings("deprecation")
+    public String execute(final Player player, final String chatMessage)
 	{
 		if (!player.hasPermission("prospam.nocheck"))
 		{
-			final Chatter chatter = ChatterHandler.getChatter(player.getName());
+			final Chatter chatter = ChatterHandler.getChatter(player.getUniqueId());
 
 			final List<String> filters_triggered = new ArrayList<String>();
 			String previouslyFilteredMessage = chatMessage;
@@ -89,7 +92,7 @@ public class FilterHandler
 					{
 						chatter.increaseSpamCountCaps();
 						filters_triggered.add("Caps");
-						
+
 						if(settings.trigger_enabled_caps)
 							trigger.execute(chatter, chatter.getSpamCountCaps(), settings.trigger_caps);
 					}
@@ -107,7 +110,7 @@ public class FilterHandler
 					if(filteredMessage == null || !previouslyFilteredMessage.equals(filteredMessage))
 					{
 						chatter.increaseSpamCountUrls();
-						filters_triggered.add("URLs");
+						filters_triggered.add("URL");
 						
 						if(settings.trigger_enabled_urls)
 							trigger.execute(chatter, chatter.getSpamCountUrls(), settings.trigger_urls);
@@ -126,7 +129,7 @@ public class FilterHandler
 					{
 						chatter.increaseSpamCountFlood();
 						filters_triggered.add("Flood");
-						informSpam(player.getName(), filters_triggered, chatMessage);
+						informSpam(player.getUniqueId(), player.getName(), filters_triggered, chatMessage);
 						
 						if(settings.trigger_enabled_flood)
 							trigger.execute(chatter, chatter.getSpamCountFlood(), settings.trigger_flood);
@@ -146,7 +149,7 @@ public class FilterHandler
 					{
 						chatter.increaseSpamCountSimilar();
 						filters_triggered.add("Similar");
-						informSpam(player.getName(), filters_triggered, chatMessage);
+						informSpam(player.getUniqueId(), player.getName(), filters_triggered, chatMessage);
 						
 						if(settings.trigger_enabled_similar)
 							trigger.execute(chatter, chatter.getSpamCountSimilar(), settings.trigger_similar);
@@ -162,7 +165,7 @@ public class FilterHandler
 				{
 					filteredMessage = filterBlacklist.execute(chatter, filteredMessage);
 					
-					//check if this filter got triggert
+					//check if this filter got triggered
 					if(filteredMessage == null || !previouslyFilteredMessage.equals(filteredMessage))
 					{
 						chatter.increaseSpamCountBlacklist();
@@ -174,7 +177,7 @@ public class FilterHandler
 					
 					if (filteredMessage == null)
 					{
-						informSpam(player.getName(), filters_triggered, chatMessage);
+						informSpam(player.getUniqueId(), player.getName(), filters_triggered, chatMessage);
 						
 						if(strings.blacklist_lines_ignored != null && !strings.blacklist_lines_ignored.isEmpty())
 							player.sendMessage(ChatColor.translateAlternateColorCodes('&', strings.blacklist_lines_ignored));
@@ -184,35 +187,35 @@ public class FilterHandler
 				}
 				
 				if(filters_triggered.size() > 0)
-					informSpam(player.getName(), filters_triggered, chatMessage);
+					informSpam(player.getUniqueId(), player.getName(), filters_triggered, chatMessage);
 
 				return filteredMessage;
 			}
 			catch (IllegalArgumentException e)
 			{
-				plugin.getLogger().severe(e.getMessage());
+                ProSpam.log(Level.SEVERE, e.getMessage());
 			}
 			catch (NullPointerException e)
 			{
-				plugin.getLogger().severe(e.getMessage());
+                ProSpam.log(Level.SEVERE, e.getMessage());
 			}
 		}
 
 		return chatMessage;
 	}
 	
-	private void informSpam(final String playerName, final List<String> triggeredFilters, final String origMessage)
+	private void informSpam(final UUID uuid, final String playerName, final List<String> triggeredFilters, final String origMessage)
 	{
 		final Player[] players = plugin.getServer().getOnlinePlayers();
 		final String joinedFilters = StringUtils.join(triggeredFilters, ", ");
 		
 		if(settings.log_spam)
-			plugin.getLogger().info(MessageFormat.format("{0} triggered a spam filter: {1} [{2}]", playerName, joinedFilters, origMessage));
+            ProSpam.log(Level.INFO, MessageFormat.format("{0} [UUID: {1}] triggered a spam filter: {2} [{3}]", playerName, uuid, joinedFilters, origMessage));
 		
 		for(Player player: players)
 		{
 			if(player.hasPermission("prospam.inform")/* && !player.getName().equals(playerName)*/)
-				player.sendMessage(plugin.prefixed(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(strings.trigger_information, playerName, joinedFilters))));
+				player.sendMessage(ProSpam.prefixed(ChatColor.translateAlternateColorCodes('&', MessageFormat.format(strings.trigger_information, playerName, joinedFilters))));
 		}
 	}
 }

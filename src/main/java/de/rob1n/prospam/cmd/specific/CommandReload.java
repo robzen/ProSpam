@@ -35,7 +35,7 @@ public class CommandReload extends Command
 	{
 		plugin.getDataHandler().loadAll();
 		
-		sender.sendMessage(plugin.prefixed("Settings successfully loaded."));
+		sender.sendMessage(ProSpam.prefixed("Settings successfully loaded."));
 	}
 
 }

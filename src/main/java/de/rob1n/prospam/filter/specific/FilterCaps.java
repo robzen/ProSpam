@@ -30,7 +30,7 @@ public class FilterCaps extends Filter
 		for(int i=0; i<wordArrLength; ++i)
 		{
 			//wort nicht checken falls spielername
-			if(isPlayer(onlinePlayers, wordArr[i]))
+			if(isPlayerName(onlinePlayers, wordArr[i]))
 				continue;
 
             //wort nicht checken falls smilie
