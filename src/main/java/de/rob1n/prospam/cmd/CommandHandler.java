@@ -17,9 +17,6 @@ public class CommandHandler
 	
 	public boolean execute(CommandSender sender, /*String label, */String[] args)
 	{
-		if(!sender.hasPermission("prospam.config"))
-			return true;
-		
 		Command cmd = null;
 		
 		try

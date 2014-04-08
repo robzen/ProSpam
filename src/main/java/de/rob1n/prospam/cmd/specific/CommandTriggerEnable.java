@@ -52,11 +52,15 @@ public class CommandTriggerEnable extends Command
 			settings.trigger_enabled_blacklist = true;
 		else
 			throw new IllegalArgumentException();
-		
-		sender.sendMessage(ProSpam.prefixed(StringUtils.capitalize(triggerName)+" triggers successfully enabled"));
-		
+
 		if(!settings.save())
-			sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        {
+            sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        }
+        else
+        {
+            sender.sendMessage(ProSpam.prefixed(StringUtils.capitalize(triggerName)+" triggers successfully enabled"));
+        }
 	}
 
 }

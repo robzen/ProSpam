@@ -30,8 +30,10 @@ public abstract class CommandTrigger extends Command
         //open filter gui if parameters are missing
         if (isPlayer(sender) && parameter.length <= 1)
         {
+            Player player = (Player)sender;
+            
             CommandFilters commandFilters = new CommandFilters((plugin));
-            commandFilters.execute(sender, new String[0]);
+            commandFilters.showGui(player);
             return;
         }
 

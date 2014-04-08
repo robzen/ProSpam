@@ -52,9 +52,13 @@ public class CommandFilterDisable extends Command
 		else
 			throw new IllegalArgumentException();
 		
-		sender.sendMessage(ProSpam.prefixed(StringUtils.capitalize(filterName)+" filter successfully disabled"));
-		
 		if(!settings.save())
-			sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        {
+            sender.sendMessage(ProSpam.prefixed("Could not save state in the config file!"));
+        }
+        else
+        {
+            sender.sendMessage(ProSpam.prefixed(StringUtils.capitalize(filterName)+" filter successfully disabled"));
+        }
 	}
 }

@@ -119,7 +119,7 @@ public class CommandLinesSimilar extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandFilters commandFilters = new CommandFilters(plugin);
-                commandFilters.execute(player, new String[0]);
+                commandFilters.showGui(player);
             }
         }));
 

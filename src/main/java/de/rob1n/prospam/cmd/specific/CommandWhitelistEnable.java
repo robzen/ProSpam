@@ -34,7 +34,6 @@ public class CommandWhitelistEnable extends Command
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException
 	{
 		settings.whitelist_enabled = true;
-		
 
 		if(!settings.save())
         {

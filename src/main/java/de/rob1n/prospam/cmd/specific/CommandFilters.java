@@ -262,7 +262,7 @@ public class CommandFilters extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandMaxCaps commandMaxCaps = new CommandMaxCaps(plugin);
-                commandMaxCaps.execute(player, new String[0]);
+                commandMaxCaps.showGui(player);
             }
         }));
 
@@ -275,7 +275,7 @@ public class CommandFilters extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandLinesLocked commandLinesLocked = new CommandLinesLocked(plugin);
-                commandLinesLocked.execute(player, new String[0]);
+                commandLinesLocked.showGui(player);
             }
         }));
 
@@ -286,7 +286,7 @@ public class CommandFilters extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandLinesSimilar commandLinesSimilar = new CommandLinesSimilar(plugin);
-                commandLinesSimilar.execute(player, new String[0]);
+                commandLinesSimilar.showGui(player);
             }
         }));
 

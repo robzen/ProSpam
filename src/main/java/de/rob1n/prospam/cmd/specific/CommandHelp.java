@@ -78,7 +78,7 @@ public class CommandHelp extends Command implements CommandWithGui
                 public void onClick(Player player)
                 {
                     CommandDisable commandDisable = new CommandDisable(plugin);
-                    commandDisable.execute(player, new String[0]);
+                    commandDisable.execute(player, new String[0]); //no gui, execute normally
 
                     //reopen with new settings
                     showGui(player);
@@ -94,7 +94,7 @@ public class CommandHelp extends Command implements CommandWithGui
                 public void onClick(Player player)
                 {
                     CommandEnable commandEnable = new CommandEnable(plugin);
-                    commandEnable.execute(player, new String[0]);
+                    commandEnable.execute(player, new String[0]); //no gui, execute normally
 
                     //reopen with new settings
                     showGui(player);
@@ -109,7 +109,7 @@ public class CommandHelp extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandReload commandReload = new CommandReload(plugin);
-                commandReload.execute(player, new String[0]);
+                commandReload.execute(player, new String[0]); //no gui, execute normally
 
                 //reopen with new settings
                 showGui(player);
@@ -129,7 +129,7 @@ public class CommandHelp extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandFilters commandFilters = new CommandFilters(plugin);
-                commandFilters.execute(player, new String[0]);
+                commandFilters.showGui(player);
             }
         }));
 
@@ -140,7 +140,7 @@ public class CommandHelp extends Command implements CommandWithGui
             public void onClick(Player player)
             {
                 CommandCounter commandCounter = new CommandCounter(plugin);
-                commandCounter.execute(player, new String[0]);
+                commandCounter.showGui(player);
             }
         }));
 
@@ -153,7 +153,7 @@ public class CommandHelp extends Command implements CommandWithGui
                 public void onClick(Player player)
                 {
                     CommandWhitelistDisable commandWhitelistDisable = new CommandWhitelistDisable(plugin);
-                    commandWhitelistDisable.execute(player, new String[0]);
+                    commandWhitelistDisable.execute(player, new String[0]); //no gui, execute normally
 
                     //reopen with new settings
                     showGui(player);
@@ -168,7 +168,7 @@ public class CommandHelp extends Command implements CommandWithGui
                 public void onClick(Player player)
                 {
                     CommandWhitelistEnable commandWhitelistEnable = new CommandWhitelistEnable(plugin);
-                    commandWhitelistEnable.execute(player, new String[0]);
+                    commandWhitelistEnable.execute(player, new String[0]); //no gui, execute normally
 
                     //reopen with new settings
                     showGui(player);
