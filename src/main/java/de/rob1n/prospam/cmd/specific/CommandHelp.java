@@ -5,6 +5,7 @@ import de.rob1n.prospam.cmd.Command;
 import de.rob1n.prospam.cmd.CommandList;
 import de.rob1n.prospam.cmd.CommandWithGui;
 import de.rob1n.prospam.gui.Item;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -35,10 +36,10 @@ public class CommandHelp extends Command implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "help";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {""};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter)
@@ -53,10 +54,10 @@ public class CommandHelp extends Command implements CommandWithGui
         }
         else
         { //show in conventional way
-            sender.sendMessage(ProSpam.prefixed("[Version: "+ProSpam.VERSION+" by prodaim] "+"List of Commands"));
+            sender.sendMessage(ProSpam.prefixed("[Version: "+plugin.getDescription().getVersion()+" by prodaim] "+"List of Commands"));
             for(Command cmd: cmdList)
             {
-                sender.sendMessage(ChatColor.GRAY+"/prospam "+ChatColor.LIGHT_PURPLE+cmd.getUsage());
+                sender.sendMessage(ChatColor.GRAY+"/prospam " + ChatColor.LIGHT_PURPLE + StringUtils.join(cmd.getArgs(), " "));
                 sender.sendMessage(ChatColor.ITALIC+cmd.getDescription()+ChatColor.RESET);
                 //sender.sendMessage(ChatColor.GRAY+"---------------------------------------------"+ChatColor.RESET);
             }

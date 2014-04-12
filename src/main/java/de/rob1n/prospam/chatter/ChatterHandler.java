@@ -5,11 +5,13 @@ import de.rob1n.prospam.exception.NotFoundException;
 import de.rob1n.prospam.exception.PlayerNotOnlineException;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class ChatterHandler
 {
-	private final static List<Chatter> chatters = new ArrayList<Chatter>();
+	private final static Set<Chatter> chatters = new HashSet<Chatter>();
 	
 	private final ProSpam plugin;
 	
@@ -22,7 +24,7 @@ public class ChatterHandler
 	{
 		for(Chatter c: chatters)
 		{
-			if(c.getUUID().equals(uuid))
+			if(c.getUUID() != null && c.getUUID().equals(uuid))
 				return c;
 		}
 		
@@ -59,28 +61,22 @@ public class ChatterHandler
 	}
 
     /**
-     * Get chatter by name
+     * Get a chatter by name - only online chatters!
      * @param name the chatters name
-     * @return all players with this name, empty set if none found
+     * @return chatter with that name
      */
-    public static Set<Chatter> getChatter(final String name)
+    public static Chatter getChatter(final String name) throws NotFoundException
     {
-        Set<Chatter> chattersFound = new HashSet<Chatter>(1);
         for (Chatter chatter : chatters)
         {
-            try
-            {
-                //noinspection deprecation
-                if(chatter.getPlayer().getName().equalsIgnoreCase(name))
-                    chattersFound.add(chatter);
-            }
-            catch (PlayerNotOnlineException ignored)
-            {
-                //saved chatter isn't online anymore
-            }
+            Player player = chatter.getPlayer();
+
+            //noinspection deprecation
+            if(player.getName() != null && player.getName().equalsIgnoreCase(name))
+                return chatter;
         }
 
-        return chattersFound;
+        throw new NotFoundException("Chatter not found");
     }
 	
 	/**
@@ -98,7 +94,7 @@ public class ChatterHandler
 		return player;
 	}
 	
-	public List<Chatter> getChatters()
+	public Set<Chatter> getChatters()
 	{
 		return chatters;
 	}

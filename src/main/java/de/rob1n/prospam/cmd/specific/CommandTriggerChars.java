@@ -28,10 +28,10 @@ public class CommandTriggerChars extends CommandTrigger implements CommandWithGu
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-chars [violation #] <commands>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	
 	@Override
 	public String[] getAliases()

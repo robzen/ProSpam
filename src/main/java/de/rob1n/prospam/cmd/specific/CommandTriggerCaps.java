@@ -28,10 +28,10 @@ public class CommandTriggerCaps extends CommandTrigger implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-caps [violation #] <commands>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	
 	@Override
 	public String[] getAliases()

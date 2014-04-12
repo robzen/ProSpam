@@ -26,10 +26,10 @@ public class CommandTriggerDisable extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-disable <caps|chars|flood|similar|urls|blacklist>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"<caps|chars|flood|similar|urls|blacklist>"};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException

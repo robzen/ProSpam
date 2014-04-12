@@ -6,7 +6,7 @@ public interface CommandInterface
 {
 	public String getName();
 	public String getDescription();
-	public String getUsage();
+	public String[] getArgs();
 	public String[] getAliases();
 	
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException;

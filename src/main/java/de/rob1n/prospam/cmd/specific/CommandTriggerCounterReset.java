@@ -4,11 +4,12 @@ import de.rob1n.prospam.ProSpam;
 import de.rob1n.prospam.chatter.Chatter;
 import de.rob1n.prospam.chatter.ChatterHandler;
 import de.rob1n.prospam.cmd.Command;
-import de.rob1n.prospam.exception.PlayerNotOnlineException;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class CommandTriggerCounterReset extends Command
 {
@@ -31,18 +32,23 @@ public class CommandTriggerCounterReset extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-counter-reset [minutes] [player]";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[minutes]", "[player]"};
+    }
+
+    public String[] getAliases()
+    {
+        return new String[] { "reset", "counter-reset", "stats-reset", "reset-stats" };
+    }
 
 	@Override
-	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException
+	public void execute(final CommandSender sender, final String[] parameter) throws IllegalArgumentException
 	{
 		if (parameter.length <= 1)
 		{
 			// reset spam violations of all players
-			final List<Chatter> chatters = plugin.getChatterHandler().getChatters();
+			final Set<Chatter> chatters = plugin.getChatterHandler().getChatters();
 			for (Chatter chatter : chatters)
 			{
 				chatter.resetSpamViolations();
@@ -78,23 +84,30 @@ public class CommandTriggerCounterReset extends Command
 				}
 				catch (NumberFormatException e)
 				{
-                    final Set<Chatter> chatters = ChatterHandler.getChatter(parameter[1]);
-
-                    for (Chatter chatter : chatters)
+                    //reset spam stats for a player
+                    Bukkit.getScheduler().runTaskAsynchronously(plugin, new BukkitRunnable()
                     {
-                        chatter.resetSpamViolations();
-
-                        try
+                        @Override
+                        public void run()
                         {
                             //noinspection deprecation
-                            String name = chatter.getPlayer().getName();
-                            sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted for " + name));
+                            UUID uuid = Bukkit.getServer().getOfflinePlayer(parameter[1]).getUniqueId();
+
+                            if(uuid != null)
+                            {
+                                Chatter chatter = ChatterHandler.getChatter(uuid);
+                                //noinspection deprecation
+                                String name = Bukkit.getOfflinePlayer(uuid).getName();
+
+                                chatter.resetSpamViolations();
+                                sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted for " + name));
+                            }
+                            else
+                            {
+                                sender.sendMessage(ProSpam.error("No stats for this player"));
+                            }
                         }
-                        catch (PlayerNotOnlineException ignored)
-                        {
-                            sender.sendMessage(ProSpam.prefixed("Spam violation counter successfully resetted for Player UUID: " + chatter.getUUID()));
-                        }
-                    }
+                    });
 				}
 			}
 			else

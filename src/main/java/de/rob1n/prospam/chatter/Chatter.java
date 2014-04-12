@@ -1,7 +1,7 @@
 package de.rob1n.prospam.chatter;
 
 import de.rob1n.prospam.exception.ChatterHasNoMessagesException;
-import de.rob1n.prospam.exception.PlayerNotOnlineException;
+import de.rob1n.prospam.exception.NotFoundException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -38,14 +38,16 @@ public class Chatter
 		this.submittedMessages.add(message);
 	}
 
-    public Player getPlayer() throws PlayerNotOnlineException
+    public Player getPlayer() throws NotFoundException
     {
         Player player = Bukkit.getServer().getPlayer(uuid);
 
         if(player != null)
+        {
             return player;
+        }
 
-        throw new PlayerNotOnlineException();
+        throw new NotFoundException("Player not found");
     }
 	
 	public void increaseSpamCountCaps()

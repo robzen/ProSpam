@@ -28,9 +28,13 @@ public class CommandTriggerBlacklist extends CommandTrigger implements CommandWi
 	}
 
 	@Override
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	public String getUsage()
 	{
-		return "trigger-blacklist [violation #] <commands>";
+		return "trigger-blacklist ";
 	}
 	
 	@Override

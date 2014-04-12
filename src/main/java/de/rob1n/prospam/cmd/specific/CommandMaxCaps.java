@@ -33,10 +33,10 @@ public class CommandMaxCaps extends Command implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "max-caps <percent>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"<percent>"};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException
@@ -77,12 +77,18 @@ public class CommandMaxCaps extends Command implements CommandWithGui
     public void showGui(Player player)
     {
         Set<Item> items = new HashSet<Item>();
+        int valueFilterMayCaps = settings.filter_caps_max;
 
         //percent items
         for(int i = 0; i <= 8; i++)
         {
             final int percent = (int)Math.floor(i*(100f/8f));
-            items.add(new Item(i, new ItemStack(Material.SLIME_BALL), percent+"%", "Max. "+percent+"% caps till lowercase", new Item.ClickAction()
+            ItemStack itemStack;
+
+            if(percent == valueFilterMayCaps) { itemStack = new ItemStack(Material.ENDER_PEARL); }
+            else { itemStack = new ItemStack(Material.SLIME_BALL); }
+
+            items.add(new Item(i, itemStack, percent+"%", "Max. "+percent+"% caps till lowercase", new Item.ClickAction()
             {
                 @Override
                 public void onClick(Player player)
@@ -95,6 +101,8 @@ public class CommandMaxCaps extends Command implements CommandWithGui
                     }
                     else
                     {
+                        //show window with new settings
+                        showGui(player);
                         player.sendMessage(ProSpam.prefixed("Max. caps per word successfully set to "+percent+"%"));
                     }
                 }

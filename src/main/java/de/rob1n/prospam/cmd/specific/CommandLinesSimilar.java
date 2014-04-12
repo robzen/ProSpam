@@ -33,10 +33,10 @@ public class CommandLinesSimilar extends Command implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "lines-similar <seconds>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"<seconds>"};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException
@@ -82,12 +82,18 @@ public class CommandLinesSimilar extends Command implements CommandWithGui
     public void showGui(Player player)
     {
         Set<Item> items = new HashSet<Item>();
+        int valueFilterLinesSimilar = settings.filter_lines_similar;
 
         //time items
         for (int i = 0; i <= 8; i++)
         {
             final int secs = i * (i*2);
-            items.add(new Item(i, new ItemStack(Material.SLIME_BALL), secs+" seconds", "Time between similar msgs", new Item.ClickAction()
+            ItemStack itemStack;
+
+            if(secs == valueFilterLinesSimilar) { itemStack = new ItemStack(Material.ENDER_PEARL); }
+            else { itemStack = new ItemStack(Material.SLIME_BALL); }
+
+            items.add(new Item(i, itemStack, secs+" seconds", "Time between similar msgs", new Item.ClickAction()
             {
                 @Override
                 public void onClick(Player player)
@@ -100,6 +106,9 @@ public class CommandLinesSimilar extends Command implements CommandWithGui
                     }
                     else
                     {
+                        //show window with new settings
+                        showGui(player);
+
                         player.sendMessage(ProSpam.prefixed("Timespan successfully set to "+secs+" seconds"));
                     }
                 }

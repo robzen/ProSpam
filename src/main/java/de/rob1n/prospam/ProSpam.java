@@ -18,8 +18,7 @@ import java.util.logging.Logger;
 
 public class ProSpam extends JavaPlugin
 {
-	public static final String VERSION = "0.9.95";
-
+    public static final String CMD_LABEL = "prospam";
     public static final String LOG_PREFIX = "[ProSpam] ";
     private static final Logger LOGGER = Logger.getLogger("Minecraft.ProSpam");
 	
@@ -54,6 +53,7 @@ public class ProSpam extends JavaPlugin
         mGuiManager = new GuiManager(this);
 
 		getServer().getPluginManager().registerEvents(mChatListener, this);
+        getCommand(CMD_LABEL).setTabCompleter(mCommandHandler);
 	}
 	
 	@Override

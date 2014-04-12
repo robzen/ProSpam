@@ -28,10 +28,10 @@ public class CommandTriggerUrls extends CommandTrigger implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-urls [violation #] <commands>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	
 	@Override
 	public String[] getAliases()

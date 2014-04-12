@@ -25,10 +25,10 @@ public class CommandWhitelistDisable extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "whitelist-disable";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {""};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException

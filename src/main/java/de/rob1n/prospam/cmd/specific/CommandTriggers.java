@@ -29,10 +29,10 @@ public class CommandTriggers extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "triggers [caps|chars|flood|similar|urls|blacklist]";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[caps|chars|flood|similar|urls|blacklist]"};
+    }
 
 	@Override
 	public String[] getAliases()

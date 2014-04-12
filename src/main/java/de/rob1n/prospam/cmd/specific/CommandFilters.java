@@ -35,10 +35,10 @@ public class CommandFilters extends Command implements CommandWithGui
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "filters";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {""};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException

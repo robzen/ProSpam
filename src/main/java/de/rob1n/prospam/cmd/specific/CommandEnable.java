@@ -25,10 +25,10 @@ public class CommandEnable extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "enable";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {""};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter)

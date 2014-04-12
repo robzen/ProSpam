@@ -28,10 +28,10 @@ public class CommandTriggerFlood extends CommandTrigger implements CommandWithGu
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-flood [violation #] <commands>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	
 	@Override
 	public String[] getAliases()

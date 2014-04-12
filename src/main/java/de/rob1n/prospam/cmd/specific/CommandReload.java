@@ -25,10 +25,10 @@ public class CommandReload extends Command
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "reload";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {""};
+    }
 
 	@Override
 	public void execute(CommandSender sender, String[] parameter) throws IllegalArgumentException

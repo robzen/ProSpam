@@ -154,7 +154,7 @@ public abstract class CommandTrigger extends Command
                     break;
                 }
 
-                items.add(new Item(iter++, new ItemStack(Material.YELLOW_FLOWER), cmd, "Click to remove", new Item.ClickAction()
+                items.add(new Item(iter++, new ItemStack(Material.RECORD_8), cmd, "Click to remove", new Item.ClickAction()
                 {
                     @Override
                     public void onClick(Player player)

@@ -28,10 +28,10 @@ public class CommandTriggerSimilar extends CommandTrigger implements CommandWith
 	}
 
 	@Override
-	public String getUsage()
-	{
-		return "trigger-similar [violation #] <commands>";
-	}
+    public String[] getArgs()
+    {
+        return new String[] {"[violation #]", "<commands>"};
+    }
 	
 	@Override
 	public String[] getAliases()
