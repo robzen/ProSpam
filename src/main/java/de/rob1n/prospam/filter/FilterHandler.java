@@ -50,6 +50,12 @@ public class FilterHandler
 		trigger = new Trigger(plugin);
 	}
 
+    /**
+     * Execute all the filters
+     * @param player the player
+     * @param chatMessage the txt to filter
+     * @return the filtered txt, if null is returend the whole txt should be ignored
+     */
 	@SuppressWarnings("deprecation")
     public String execute(final Player player, final String chatMessage)
 	{

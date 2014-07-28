@@ -12,6 +12,7 @@ import java.util.logging.Level;
 public class Settings extends ConfigFile
 {
 	public static final String OPTIONS_ENABLED = "enabled";
+	public static final String OPTIONS_FILTER_COMMANDS = "filter-commands";
 	public static final String OPTIONS_LOG_SPAM = "log-spam";
 	public static final String OPTIONS_FILTER_ENABLED_CAPS = "filter-enabled-caps";
 	public static final String OPTIONS_FILTER_ENABLED_CHARS = "filter-enabled-chars";
@@ -39,6 +40,7 @@ public class Settings extends ConfigFile
 	
 	public boolean enabled;
 	public boolean log_spam;
+    public List<String> filter_commands;
 	public boolean filter_enabled_caps;
 	public boolean filter_enabled_chars;
 	public boolean filter_enabled_flood;
@@ -101,6 +103,8 @@ public class Settings extends ConfigFile
 	protected void loadSettings()
 	{
 		enabled = getConfig().getBoolean(OPTIONS_ENABLED, true);
+
+        filter_commands = getConfig().getStringList(OPTIONS_FILTER_COMMANDS);
 		
 		log_spam = getConfig().getBoolean(OPTIONS_LOG_SPAM, true);
 		
@@ -137,6 +141,8 @@ public class Settings extends ConfigFile
 	protected void saveSettings()
 	{
 		getConfig().set(OPTIONS_ENABLED, enabled);
+
+        getConfig().set(OPTIONS_FILTER_COMMANDS, filter_commands);
 		
 		getConfig().set(OPTIONS_LOG_SPAM, log_spam);
 		
